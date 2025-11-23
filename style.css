@@ -1,0 +1,17 @@
+.input {
+  background:#222;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:6px;
+  font-size:14px;
+  text-align:center;
+  width:60px;
+}
+
+@media (max-width:600px) {
+  body { font-size:14px; }
+  .card { padding:10px; margin:10px; }
+  input, select, button { width:100%; font-size:14px; margin-bottom:8px; }
+  table { width:100%; font-size:14px; }
+}
