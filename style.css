@@ -495,3 +495,33 @@ button:hover {
   line-height:1.2;         /* تقليل ارتفاع السطر */
   border:1px solid #22c55e;
 }
+/* شبكة البطاقات للجوال */
+@media (max-width:600px){
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); /* مربعات متناسقة */
+    gap: 6px;              /* فراغ بسيط بين البطاقات */
+    margin: 6px;
+  }
+
+  .grid .card {
+    width: 70px;
+    height: 70px;
+    padding: 4px;
+    margin: 2px;
+    font-size: 9px;
+    line-height: 1.2;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;   /* النص يظهر بشكل عمودي مرتب */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    word-break: break-word;   /* منع تداخل النص */
+  }
+
+  .grid .card strong {
+    font-size: 9px;
+    margin-bottom: 2px;       /* فصل اسم البطاقة عن النص */
+    display: block;
+  }
+}
