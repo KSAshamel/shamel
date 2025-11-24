@@ -1,14 +1,11 @@
-/* إعدادات أساسية */
 body {
   font-family: Tahoma;
   direction: rtl;
   background: #0f172a;
   color: #f1f5f9;
-  margin:0;
-  padding:0;
+  margin:0; padding:0;
 }
 
-/* الحاوية الرئيسية */
 .container {
   background:#1e293b;
   padding:30px;
@@ -19,7 +16,6 @@ body {
   border:2px solid #22c55e;
 }
 
-/* العناوين */
 h2 {
   text-align:center;
   color:#22c55e;
@@ -27,7 +23,6 @@ h2 {
   margin-bottom:20px;
 }
 
-/* النصوص */
 label {
   display:block;
   margin-top:15px;
@@ -35,7 +30,6 @@ label {
   color:#86efac;
 }
 
-/* الحقول */
 input, select {
   width:100%;
   padding:12px;
@@ -45,11 +39,8 @@ input, select {
   background:#334155;
   color:#fff;
   font-size:16px;
-  text-align:center;
-  margin-bottom:10px;
 }
 
-/* الأزرار */
 button {
   width:100%;
   padding:14px;
@@ -69,7 +60,6 @@ button:hover {
   box-shadow:0 0 15px rgba(34,197,94,0.6);
 }
 
-/* النتائج */
 .result {
   margin-top:25px;
   font-size:20px;
@@ -79,72 +69,20 @@ button:hover {
   white-space:pre-line;
 }
 
-/* الملاحظات */
-.note {
-  color:#9ccb6a;
-  font-size:0.9em;
+.warn {
+  color:#f87171;
+  font-weight:bold;
   margin-top:10px;
   text-align:center;
 }
 
 /* تحسين العرض على الشاشات الصغيرة (الجوال) */
 @media (max-width:600px) {
-  .container {
-    margin:20px;
-    padding:20px;
-    border-radius:15px;
-  }
-
-  h2 {
-    font-size:22px;
-  }
-
-  label {
-    font-size:14px;
-  }
-
-  input, select {
-    font-size:14px;
-    padding:10px;
-  }
-
-  button {
-    font-size:16px;
-    padding:12px;
-  }
-
-  .result {
-    font-size:16px;
-  }
-
-  .note {
-    font-size:12px;
-  }
-}
-@media (max-width:600px) {
-  .container {
-    margin: 15px;
-    padding: 15px;
-    border-radius: 12px;
-  }
-
-  h2 {
-    font-size: 22px;
-  }
-
-  input, select {
-    width: 100%;
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  button {
-    width: 100%;
-    font-size: 16px;
-    padding: 12px;
-  }
-
-  .result {
-    font-size: 16px;
-  }
+  .container {margin:15px; padding:15px; border-radius:12px;}
+  h2 {font-size:22px;}
+  label {font-size:14px;}
+  input, select {font-size:14px; padding:10px;}
+  button {font-size:16px; padding:12px;}
+  .result {font-size:16px;}
+  .warn {font-size:14px;}
 }
