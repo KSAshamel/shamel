@@ -1,527 +1,57 @@
+:root {
+  --bg:#000; --panel:#111; --text:#f1f5f9;
+  --accent:#6fae3f; --alert:#b22222; --gold:#FFD700;
+}
+
 body {
-  font-family: Tahoma;
-  direction: rtl;
-  background: #0f172a;
-  color: #f1f5f9;
   margin:0; padding:0;
+  background:var(--bg); color:var(--text);
+  font-family:'Tahoma';
+  display:flex; flex-direction:column;
+  min-height:100vh;
 }
 
-.container {
-  background:#1e293b;
-  padding:30px;
-  border-radius:20px;
-  max-width:800px;
-  margin:50px auto;
-  box-shadow:0 0 30px rgba(34,197,94,0.4);
-  border:2px solid #22c55e;
+header {
+  background:var(--panel);
+  padding:12px; text-align:center;
+  font-size:18px; font-weight:bold;
+  color:var(--accent);
 }
 
-h2 {
-  text-align:center;
-  color:#22c55e;
-  font-size:32px;
-  margin-bottom:20px;
-}
-
-label {
-  display:block;
-  margin-top:15px;
-  font-weight:bold;
-  color:#86efac;
-}
-
-input, select {
-  width:100%;
-  padding:12px;
-  margin-top:8px;
-  border:1px solid #22c55e;
-  border-radius:8px;
-  background:#334155;
-  color:#fff;
-  font-size:16px;
-}
-
-button {
-  width:100%;
-  padding:14px;
-  margin-top:25px;
-  border:none;
+.section-card {
+  background:var(--panel);
+  margin:6px; padding:12px;
   border-radius:10px;
-  background:linear-gradient(45deg,#22c55e,#86efac);
-  color:#000;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
+  box-shadow:0 3px 6px rgba(0,0,0,0.5);
+  color:var(--accent);
 }
 
-button:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 15px rgba(34,197,94,0.6);
+h2 { margin:0 0 8px 0; color:var(--gold); font-size:16px; }
+
+.row { display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap; }
+.input {
+  background:#222; color:#fff;
+  border:none; border-radius:6px;
+  padding:4px; font-size:13px;
+  text-align:center; width:60px;
+}
+.btn {
+  background:var(--accent); color:#000;
+  font-weight:bold; cursor:pointer;
+  width:100%; margin-top:8px;
+  padding:8px; border-radius:6px;
+  border:none; font-size:14px;
 }
 
-.result {
-  margin-top:25px;
-  font-size:20px;
-  color:#22c55e;
-  text-align:center;
-  font-weight:bold;
-  white-space:pre-line;
+footer {
+  margin-top:auto; text-align:center;
+  padding:8px; font-size:12px;
+  color:var(--gold);
 }
 
-.warn {
-  color:#f87171;
-  font-weight:bold;
-  margin-top:10px;
-  text-align:center;
-}
-
-/* تحسين العرض على الشاشات الصغيرة (الجوال) */
-@media (max-width:600px) {
-  .container {margin:15px; padding:15px; border-radius:12px;}
-  h2 {font-size:22px;}
-  label {font-size:14px;}
-  input, select {font-size:14px; padding:10px;}
-  button {font-size:16px; padding:12px;}
-  .result {font-size:16px;}
-  .warn {font-size:14px;}
-}
-/* تصغير البطاقات بشكل عام */
-.card {
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 13px;
-  line-height: 1.4;
-}
-
-/* شبكة البطاقات أصغر وتحتوي أعمدة مناسبة للجوال */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 8px;
-}
-
-/* ضبط إضافي للجوال تحت 600px */
-@media (max-width: 600px) {
-  .card {
-    padding: 8px;
-    font-size: 12px;
-  }
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 6px;
-    margin: 8px;
-  }
-}
-.container {
-  background:#1e293b;
-  padding:15px;
-  border-radius:12px;
-  width:100%;          /* عرض كامل */
-  max-width:100%;      /* لا تحدد 800px */
-  margin:0;            /* بدون هوامش كبيرة */
-  box-shadow:0 0 15px rgba(34,197,94,0.4);
-  border:2px solid #22c55e;
-}
-.card {
-  background:#1e293b;
-  margin:8px;
-  padding:10px;
-  border-radius:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.4);
-  color:#22c55e;
-  font-size:14px;
-  text-align:center;
-}
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
-  gap:8px;
-  margin:8px;
-}
-@media (max-width:600px){
-  body {margin:0; padding:0;}
-  h2 {font-size:18px;}
-  label {font-size:13px;}
-  input, select {font-size:13px; padding:8px;}
-  button {font-size:14px; padding:10px;}
-  .result {font-size:14px;}
-  .warn {font-size:13px;}
-  .card {font-size:12px; padding:8px;}
-  .grid {grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:6px;}
-}
-/* الحاوية العامة */
-.container {
-  background:#1e293b;
-  padding:12px;          /* تقليل الحشو الداخلي */
-  border-radius:10px;
-  width:100%;            /* عرض كامل */
-  max-width:100%;        /* لا تحدد 800px */
-  margin:10px auto;      /* هوامش صغيرة */
-  box-shadow:0 0 10px rgba(34,197,94,0.3);
-  border:1px solid #22c55e;
-}
-
-/* البطاقات */
-.card {
-  background:#1e293b;
-  margin:6px;            /* تقليل المسافة بين البطاقات */
-  padding:8px;           /* تقليل الحشو الداخلي */
-  border-radius:8px;
-  box-shadow:0 1px 4px rgba(0,0,0,0.3);
-  color:#22c55e;
-  font-size:13px;        /* خط أصغر */
-  text-align:center;
-  line-height:1.4;
-}
-
-/* شبكة البطاقات */
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(100px, 1fr));
-  gap:6px;               /* فراغات أصغر */
-  margin:6px;
-}
-
-/* تحسين العرض على الشاشات الصغيرة */
-@media (max-width:600px){
-  h2 {font-size:16px; margin-bottom:10px;}
-  label {font-size:12px;}
-  input, select {font-size:12px; padding:6px;}
-  button {font-size:13px; padding:8px;}
-  .result {font-size:13px;}
-  .warn {font-size:12px;}
-  .card {font-size:12px; padding:6px;}
-}
-/* الحاوية العامة */
-.container {
-  background:#1e293b;
-  padding:10px;          /* تقليل الحشو الداخلي */
-  border-radius:8px;
-  width:100%;
-  max-width:100%;
-  margin:8px auto;       /* هوامش صغيرة */
-  box-shadow:0 0 8px rgba(34,197,94,0.3);
-  border:1px solid #22c55e;
-}
-
-/* البطاقات */
-.card {
-  background:#1e293b;
-  margin:6px;            /* تقليل المسافة بين البطاقات */
-  padding:8px;           /* تقليل الحشو الداخلي */
-  border-radius:8px;
-  box-shadow:0 1px 3px rgba(0,0,0,0.3);
-  color:#22c55e;
-  font-size:12px;        /* خط أصغر */
-  text-align:center;
-  line-height:1.3;
-}
-
-/* شبكة البطاقات */
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(100px, 1fr));
-  gap:6px;
-  margin:6px;
-}
-
-/* تحسين العرض على الشاشات الصغيرة */
-@media (max-width:600px){
-  h2 {font-size:16px; margin-bottom:8px;}
-  label {font-size:12px;}
-  input, select {font-size:12px; padding:6px;}
-  button {font-size:13px; padding:8px;}
-  .result {font-size:12px;}
-  .warn {font-size:12px;}
-  .card {font-size:11px; padding:6px;}
-}
-/* الحاوية العامة */
-.container {
-  background:#1e293b;
-  padding:8px;           /* تقليل الحشو الداخلي */
-  border-radius:8px;
-  width:100%;
-  max-width:100%;
-  margin:4px auto;       /* هوامش صغيرة جدًا */
-  box-shadow:0 0 6px rgba(34,197,94,0.3);
-  border:1px solid #22c55e;
-}
-
-/* البطاقات */
-.card {
-  background:#1e293b;
-  margin:4px;            /* تقليل المسافة بين البطاقات */
-  padding:6px;           /* تقليل الحشو الداخلي */
-  border-radius:6px;
-  box-shadow:0 1px 2px rgba(0,0,0,0.2);
-  color:#22c55e;
-  font-size:12px;        /* خط أصغر */
-  text-align:center;
-  line-height:1.3;
-}
-
-/* شبكة البطاقات */
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(90px, 1fr));
-  gap:4px;               /* فراغات أصغر جدًا */
-  margin:4px;
-}
-
-/* تحسين العرض على الشاشات الصغيرة */
-@media (max-width:600px){
-  h2 {font-size:15px; margin-bottom:6px;}
-  label {font-size:11px;}
-  input, select {font-size:11px; padding:5px;}
-  button {font-size:12px; padding:6px;}
-  .result {font-size:12px;}
-  .warn {font-size:11px;}
-  .card {font-size:11px; padding:5px; margin:3px;}
-  .grid {grid-template-columns:repeat(auto-fit, minmax(80px, 1fr)); gap:3px; margin:3px;}
-}
-/* الحاوية العامة للأقسام */
-.container {
-  background:#1e293b;
-  padding:12px;             /* تقليل الحشو الداخلي */
-  border-radius:10px;
-  width:100%;
-  max-width:100%;
-  margin:6px auto;          /* هوامش صغيرة جدًا بين الأقسام */
-  box-shadow:0 0 12px rgba(34,197,94,0.5); /* ظل أوضح */
-  border:1px solid #22c55e; /* حدود بارزة */
-}
-
-/* البطاقات */
-.card {
-  background:#1e293b;
-  margin:4px;               /* تقليل المسافة بين البطاقات */
-  padding:10px;             /* حشو داخلي متوسط */
-  border-radius:8px;
-  box-shadow:0 2px 8px rgba(34,197,94,0.6); /* ظل أقوى لإبراز البطاقات */
-  color:#22c55e;
-  font-size:13px;
-  text-align:center;
-  line-height:1.4;
-  border:1px solid #22c55e; /* حدود خفيفة لإبراز البطاقة */
-}
-
-/* شبكة البطاقات */
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));
-  gap:6px;                  /* فراغات صغيرة بين البطاقات */
-  margin:4px;
-}
-
-/* تحسين العرض على الشاشات الصغيرة */
-@media (max-width:600px){
-  h2 {font-size:16px; margin-bottom:6px;}
-  label {font-size:12px;}
-  input, select {font-size:12px; padding:6px;}
-  button {font-size:13px; padding:8px;}
-  .result {font-size:12px;}
-  .warn {font-size:12px;}
-  .card {font-size:12px; padding:8px; margin:3px;}
-  .grid {grid-template-columns:repeat(auto-fit, minmax(90px, 1fr)); gap:4px; margin:3px;}
-}
-/* الحاوية العامة للأقسام */
-.container {
-  background:#1e293b;
-  padding:6px;            /* حشو داخلي صغير جدًا */
-  border-radius:6px;
-  width:100%;
-  max-width:100%;
-  margin:4px auto;        /* هوامش شبه معدومة بين الأقسام */
-  box-shadow:0 0 6px rgba(34,197,94,0.4);
-  border:1px solid #22c55e;
-}
-
-/* البطاقات */
-.card {
-  background:#1e293b;
-  margin:3px;             /* مسافة صغيرة جدًا بين البطاقات */
-  padding:6px;            /* حشو داخلي صغير */
-  border-radius:6px;
-  box-shadow:0 2px 6px rgba(34,197,94,0.6); /* ظل واضح لإبراز البطاقة */
-  color:#22c55e;
-  font-size:12px;         /* خط صغير */
-  text-align:center;
-  line-height:1.2;        /* تقليل ارتفاع السطر */
-  border:1px solid #22c55e;
-}
-
-/* شبكة البطاقات */
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(90px, 1fr));
-  gap:4px;                /* فراغات صغيرة جدًا */
-  margin:3px;
-}
-
-/* تحسين العرض على الشاشات الصغيرة */
-@media (max-width:600px){
-  h2 {font-size:14px; margin-bottom:4px;}
-  label {font-size:11px; margin-top:4px;}
-  input, select {font-size:11px; padding:5px;}
-  button {font-size:12px; padding:6px; margin-top:8px;}
-  .result {font-size:12px;}
-  .warn {font-size:11px;}
-  .card {font-size:11px; padding:5px; margin:2px;}
-  .grid {grid-template-columns:repeat(auto-fit, minmax(80px, 1fr)); gap:3px; margin:2px;}
-}
-/* شبكة البطاقات في صفين فقط */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* عمودين ثابتين */
-  gap: 8px;                              /* فراغ صغير بين البطاقات */
-  margin: 6px;
-}
-
-/* البطاقات */
-.card {
-  background:#1e293b;
-  padding:10px;
-  border-radius:8px;
-  box-shadow:0 2px 8px rgba(34,197,94,0.6); /* ظل أقوى لإبراز البطاقة */
-  color:#22c55e;
-  font-size:13px;
-  text-align:center;
-  line-height:1.4;
-  border:1px solid #22c55e;
-}
-
-/* للجوال */
-@media (max-width:600px){
-  .grid {
-    grid-template-columns: repeat(2, 1fr); /* يظل صفين فقط */
-    gap: 6px;
-    margin: 4px;
-  }
-  .card {
-    font-size:12px;
-    padding:8px;
-  }
-}
-/* شبكة البطاقات: صفين أفقيين فقط */
-.grid {
-  display: grid;
-  grid-template-rows: repeat(2, auto);   /* صفين فقط */
-  grid-auto-flow: column;                /* توزيع أفقي */
-  overflow-x: auto;                      /* يسمح بالتمرير الأفقي إذا زاد العدد */
-  gap: 8px;
-  margin: 6px;
-}
-
-/* البطاقات */
-.card {
-  background:#1e293b;
-  padding:10px;
-  border-radius:8px;
-  box-shadow:0 2px 8px rgba(34,197,94,0.6);
-  color:#22c55e;
-  font-size:13px;
-  text-align:center;
-  border:1px solid #22c55e;
-  min-width:120px;                       /* عرض ثابت للبطاقة */
-}
-/* الحاوية العامة للأقسام */
-.container {
-  background:#1e293b;
-  padding:8px;            /* حشو داخلي صغير */
-  border-radius:8px;
-  width:100%;
-  max-width:100%;
-  margin:4px auto;        /* هوامش شبه معدومة بين الأقسام */
-  box-shadow:0 0 6px rgba(34,197,94,0.4);
-  border:1px solid #22c55e;
-}
-
-/* البطاقات */
-.card {
-  background:#1e293b;
-  margin:3px;             /* مسافة صغيرة جدًا بين البطاقات */
-  padding:6px;            /* حشو داخلي صغير */
-  border-radius:6px;
-  box-shadow:0 2px 6px rgba(34,197,94,0.6); /* ظل واضح لإبراز البطاقة */
-  color:#22c55e;
-  font-size:11px;         /* خط أصغر */
-  text-align:center;
-  line-height:1.2;        /* تقليل ارتفاع السطر */
-  border:1px solid #22c55e;
-}
-
-/* شبكة البطاقات */
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(90px, 1fr)); /* بطاقات أصغر */
-  gap:4px;                /* فراغات صغيرة جدًا */
-  margin:2px;
-}
-
-/* تحسين العرض على الشاشات الصغيرة */
-@media (max-width:600px){
-  h2 {font-size:14px; margin-bottom:4px;}
-  label {font-size:11px; margin-top:4px;}
-  input, select {font-size:11px; padding:5px;}
-  button {font-size:12px; padding:6px; margin-top:6px;}
-  .result {font-size:11px;}
-  .warn {font-size:11px;}
-  .card {font-size:10px; padding:5px; margin:2px;}
-  .grid {grid-template-columns:repeat(auto-fit, minmax(80px, 1fr)); gap:3px; margin:2px;}
-}
-/* الحاوية العامة للأقسام */
-.container {
-  background:#1e293b;
-  padding:6px;             /* حشو داخلي صغير جدًا */
-  border-radius:6px;
-  width:100%;
-  max-width:100%;
-  margin:3px auto;         /* هوامش شبه معدومة بين الأقسام */
-  box-shadow:0 0 6px rgba(34,197,94,0.4);
-  border:1px solid #22c55e;
-}
-
-/* البطاقات */
-.card {
-  background:#1e293b;
-  margin:2px;              /* مسافة صغيرة جدًا بين البطاقات */
-  padding:5px;             /* حشو داخلي صغير */
-  border-radius:5px;
-  box-shadow:0 1px 4px rgba(34,197,94,0.6); /* ظل واضح لإبراز البطاقة */
-  color:#22c55e;
-  font-size:10px;          /* خط أصغر */
-  text-align:center;
-  line-height:1.2;         /* تقليل ارتفاع السطر */
-  border:1px solid #22c55e;
-}
-/* شبكة البطاقات للجوال */
-@media (max-width:600px){
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); /* مربعات متناسقة */
-    gap: 6px;              /* فراغ بسيط بين البطاقات */
-    margin: 6px;
-  }
-
-  .grid .card {
-    width: 70px;
-    height: 70px;
-    padding: 4px;
-    margin: 2px;
-    font-size: 9px;
-    line-height: 1.2;
-    border-radius: 6px;
-    display: flex;
-    flex-direction: column;   /* النص يظهر بشكل عمودي مرتب */
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    word-break: break-word;   /* منع تداخل النص */
-  }
-
-  .grid .card strong {
-    font-size: 9px;
-    margin-bottom: 2px;       /* فصل اسم البطاقة عن النص */
-    display: block;
-  }
+/* ضبط للجوال */
+@media(max-width:600px){
+  header { padding:10px; font-size:17px; }
+  .section-card { margin:4px; padding:10px; }
+  .input { width:80px; }
 }
