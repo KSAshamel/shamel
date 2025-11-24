@@ -370,4 +370,37 @@ button:hover {
   .card {font-size:11px; padding:5px; margin:2px;}
   .grid {grid-template-columns:repeat(auto-fit, minmax(80px, 1fr)); gap:3px; margin:2px;}
 }
+/* شبكة البطاقات في صفين فقط */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* عمودين ثابتين */
+  gap: 8px;                              /* فراغ صغير بين البطاقات */
+  margin: 6px;
+}
+
+/* البطاقات */
+.card {
+  background:#1e293b;
+  padding:10px;
+  border-radius:8px;
+  box-shadow:0 2px 8px rgba(34,197,94,0.6); /* ظل أقوى لإبراز البطاقة */
+  color:#22c55e;
+  font-size:13px;
+  text-align:center;
+  line-height:1.4;
+  border:1px solid #22c55e;
+}
+
+/* للجوال */
+@media (max-width:600px){
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* يظل صفين فقط */
+    gap: 6px;
+    margin: 4px;
+  }
+  .card {
+    font-size:12px;
+    padding:8px;
+  }
+}
 
