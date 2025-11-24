@@ -253,6 +253,39 @@
       setInterval(updateCountdowns, 1000);
     });
   </script>
+<button id="installApp" style="
+  display:none;
+  background: linear-gradient(135deg, #006400, #c0a060);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+">
+📱 تحويل الصفحة إلى تطبيق
+</button>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/shamel/sw.js');
+  }
+
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installApp').style.display = 'inline-block';
+
+    document.getElementById('installApp').addEventListener('click', () => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        deferredPrompt = null;
+      });
+    });
+  });
+</script>
 </body>
   <script>
   if ('serviceWorker' in navigator) {
@@ -262,5 +295,6 @@
   }
 </script>
 </html>
+
 
 
