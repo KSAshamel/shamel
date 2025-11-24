@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <title>الصفحة الرئيسية</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- الترتيب الصحيح: moment ثم moment-hijri -->
+  <!-- مكتبات التحويل: لحظ أن moment يجب أن يُحمّل قبل moment-hijri -->
   <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/moment-hijri@3.0.0/moment-hijri.min.js"></script>
 
@@ -15,74 +14,99 @@
     body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family:'Tahoma'; display:flex; flex-direction:column; min-height:100vh; }
     header { background:var(--panel); padding:12px; text-align:center; font-size:18px; font-weight:bold; color:var(--accent); }
 
-    /* تقليل الهوامش بين الأقسام */
-    .card { 
-      background:var(--panel); 
-      margin:6px;                 /* بدل 15px */
-      padding:12px;               /* بدل 20px */
-      border-radius:10px; 
-      box-shadow:0 3px 6px rgba(0,0,0,0.5); 
-      color:var(--accent); 
+    /* تقليل هوامش الأقسام */
+    .section-card {
+      background:var(--panel);
+      margin:6px;
+      padding:12px;
+      border-radius:10px;
+      box-shadow:0 3px 6px rgba(0,0,0,0.5);
+      color:var(--accent);
     }
 
-    h2 { margin-top:0; color:var(--gold); font-size:16px; }
+    h2 { margin:0 0 8px 0; color:var(--gold); font-size:16px; }
 
-    /* شبكة البطاقات */
-    .grid { 
-      display:grid; 
-      grid-template-columns:repeat(auto-fit,minmax(70px,1fr)); /* بطاقات أصغر */
-      gap:6px; 
-      margin:6px; 
+    /* شبكة عامة للأزرار/الروابط */
+    .grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+      gap:6px;
+      margin:6px 0;
     }
 
-    /* البطاقات داخل العد التنازلي */
-    .grid .card { 
-      width:70px; 
-      height:70px; 
-      margin:2px; 
-      padding:6px; 
-      border-radius:8px; 
-      font-size:10px; 
-      line-height:1.2; 
-      display:flex; 
-      align-items:center; 
-      justify-content:center; 
-      text-align:center; 
-      box-shadow:0 2px 6px rgba(0,0,0,0.4); 
+    /* شبكة العدّ التنازلي مستقلة لضبط البطاقات */
+    .countdown-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(70px,1fr));
+      gap:6px;
+      margin:6px 0;
     }
 
-    .done { color:var(--accent); font-weight:bold; }
-    .highlight { color:var(--alert); font-weight:bold; }
+    /* بطاقة العدّ التنازلي صغيرة ومربعة */
+    .countdown-card {
+      background:var(--panel);
+      border:1px solid rgba(111,174,63,0.5);
+      width:70px; height:70px;
+      margin:2px; padding:4px;
+      border-radius:8px;
+      font-size:10px; line-height:1.2;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      text-align:center; word-break:break-word;
+      box-shadow:0 2px 6px rgba(0,0,0,0.4);
+      color:var(--text);
+    }
+    .countdown-card strong { font-size:10px; margin-bottom:2px; color:var(--gold); }
+    .countdown-card.done { border-color:#2ecc71; color:#2ecc71; }
+    .countdown-card .hl { color:var(--alert); font-weight:bold; }
 
+    /* عناصر الإدخال */
     .row { display:flex; gap:8px; margin-bottom:8px; flex-wrap:wrap; }
     .input {
-      background:#222;
-      color:#fff;
-      border:none;
-      border-radius:6px;
-      padding:4px;
-      font-size:13px;
-      text-align:center;
-      width:60px;
+      background:#222; color:#fff; border:none; border-radius:6px;
+      padding:4px; font-size:13px; text-align:center; width:60px;
     }
-    .btn { background:var(--accent); color:#000; font-weight:bold; cursor:pointer; width:100%; margin-top:8px; padding:8px; border-radius:6px; border:none; font-size:14px; }
-    .icon { background:var(--bg); border:2px solid var(--accent); border-radius:8px; padding:10px; text-align:center; color:var(--text); font-weight:bold; cursor:pointer; display:block; text-decoration:none; }
+    .btn {
+      background:var(--accent); color:#000; font-weight:bold; cursor:pointer;
+      width:100%; margin-top:8px; padding:8px; border-radius:6px; border:none; font-size:14px;
+    }
+
+    /* روابط الحاسبات */
+    .icon {
+      background:var(--bg);
+      border:2px solid var(--accent);
+      border-radius:8px;
+      padding:10px;
+      text-align:center;
+      color:var(--text);
+      font-weight:bold;
+      cursor:pointer;
+      display:block;
+      text-decoration:none;
+    }
     .icon:hover { background:var(--accent); color:var(--bg); }
+
     footer { margin-top:auto; text-align:center; padding:8px; font-size:12px; color:var(--gold); }
 
+    /* ضبط للجوال */
     @media(max-width:600px){
-      .grid { grid-template-columns:repeat(auto-fit,minmax(60px,1fr)); gap:4px; margin:4px; }
-      .grid .card { width:60px; height:60px; font-size:9px; padding:4px; }
-      .input{width:80px;}
+      header { padding:10px; font-size:17px; }
+      .section-card { margin:4px; padding:10px; }
+      .countdown-grid { grid-template-columns:repeat(auto-fit,minmax(60px,1fr)); gap:4px; }
+      .countdown-card { width:60px; height:60px; font-size:9px; padding:4px; }
+      .countdown-card strong { font-size:9px; }
+      .grid { grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:4px; }
+      .input { width:80px; }
     }
   </style>
 </head>
 <body>
-  <header> الصفحة الرئيسية</header>
+  <header>الصفحة الرئيسية</header>
 
   <!-- محول التاريخ -->
-  <div class="card">
+  <div class="section-card">
     <h2>محول التاريخ</h2>
+
     <label>أدخل التاريخ الميلادي:</label>
     <div class="row" id="gInputs">
       <input type="text" id="gDay"   class="input" placeholder="اليوم"  inputmode="numeric" autocomplete="off" data-maxlen="2">
@@ -102,13 +126,13 @@
   </div>
 
   <!-- العد التنازلي لمواعيد الصرف -->
-  <div class="card">
+  <div class="section-card">
     <h2>العد التنازلي لمواعيد الصرف</h2>
-    <div class="grid" id="countdownGrid"></div>
+    <div class="countdown-grid" id="countdownGrid"></div>
   </div>
 
   <!-- روابط الحاسبات -->
-  <div class="card">
+  <div class="section-card">
     <h2>الحاسبات</h2>
     <div class="grid">
       <a href="retirement.html" class="icon">حاسبة التقاعد</a>
@@ -122,9 +146,10 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function(){
-      // لا توقف الصفحة إذا لم تُحمّل المكتبات
+      // تحقق من توفر moment و moment-hijri
       const hasHijri = (typeof moment !== 'undefined') && moment.fn && typeof moment.fn.iYear === 'function';
 
+      // أدوات مساعدة
       function onlyDigits(s){ return String(s).replace(/\D+/g,''); }
       function pad2(n){ return String(n).padStart(2,'0'); }
       function isIntInRange(val, min, max){
@@ -152,11 +177,11 @@
       attachAutoAdvance('gInputs');
       attachAutoAdvance('hInputs');
 
-      // محول التاريخ مع تحكم آمن عند غياب المكتبات
+      // محول التاريخ
       function convertDate(){
         try{
           if(!hasHijri){
-            show('مكتبة التحويل غير محمّلة. تأكد من اتصال الإنترنت أو الروابط.');
+            show('مكتبة التحويل غير محمّلة. تأكد من اتصال الإنترنت.');
             return;
           }
 
@@ -173,7 +198,9 @@
             const gStr = `${gY}-${pad2(gM)}-${pad2(gD)}`;
             const mg = moment(gStr, "YYYY-MM-DD", true);
             if(!mg.isValid()){ show("تاريخ ميلادي غير صالح."); return; }
-            show(`التاريخ الهجري: ${mg.format("iYYYY/iM/iD")}`);
+            // تحويل إلى هجري عبر فورمات moment-hijri
+            const hFormatted = mg.format("iYYYY/iM/iD");
+            show(`التاريخ الهجري: ${hFormatted}`);
             return;
           }
 
@@ -181,14 +208,14 @@
           if(isIntInRange(hD,1,30) && isIntInRange(hM,1,12) && isIntInRange(hY,1,9999)){
             const mh = moment(`${Number(hY)}/${Number(hM)}/${Number(hD)}`, "iYYYY/iM/iD", true);
             if(!mh.isValid()){ show("تاريخ هجري غير صالح."); return; }
-            show(`التاريخ الميلادي: ${mh.format("YYYY/MM/DD")}`);
+            const gFormatted = mh.format("YYYY/MM/DD");
+            show(`التاريخ الميلادي: ${gFormatted}`);
             return;
           }
 
           show("أدخل اليوم ثم الشهر ثم السنة كاملة في إحدى الخانات.");
         }catch(e){
           show("حدث خطأ في التحويل. تأكد من الأرقام المدخلة.");
-          console.error(e);
         }
       }
       document.getElementById('convertBtn').addEventListener('click', convertDate);
@@ -215,42 +242,37 @@
       }
 
       function updateCountdowns(){
-        try{
-          const now = new Date();
-          const grid = document.getElementById("countdownGrid");
-          if(!grid) return;
-          grid.innerHTML = "";
+        const now = new Date();
+        const grid = document.getElementById("countdownGrid");
+        if(!grid) return;
+        grid.innerHTML = "";
 
-          const countdowns = events.map(event=>{
-            let target = new Date(now.getFullYear(), now.getMonth(), event.day);
-            if (target < now) target = new Date(now.getFullYear(), now.getMonth() + 1, event.day);
-            target = adjustWeekend(target);
+        const countdowns = events.map(event=>{
+          let target = new Date(now.getFullYear(), now.getMonth(), event.day);
+          if (target < now) target = new Date(now.getFullYear(), now.getMonth() + 1, event.day);
+          target = adjustWeekend(target);
 
-            const diff = target - now;
-            const days = Math.floor(diff / (1000*60*60*24));
-            const hours = Math.floor((diff / (1000*60*60)) % 24);
+          const diff = target - now;
+          const days = Math.floor(diff / (1000*60*60*24));
+          const hours = Math.floor((diff / (1000*60*60)) % 24);
 
-            const text = diff <= 0 ? "تم الصرف ✅" : `متبقي ${days}ي ${hours}س`;
+          const text = diff <= 0 ? "تم الصرف ✅" : `متبقي ${days}ي\n${hours}س`;
+          return { name:event.name, highlight:event.highlight, time:diff, text };
+        });
 
-            return { name:event.name, highlight:event.highlight, time:diff, text };
-          });
+        countdowns.sort((a,b)=>a.time - b.time);
 
-          countdowns.sort((a,b)=>a.time - b.time);
-
-          countdowns.forEach(item=>{
-            const card = document.createElement("div");
-            card.className = "card";
-            if(item.text.includes("تم الصرف")) card.classList.add("done");
-            const nameHtml = `<strong class="${item.highlight?'highlight':''}">${item.name}</strong>`;
-            card.innerHTML = `${nameHtml}<br>${item.text}`;
-            grid.appendChild(card);
-          });
-        }catch(e){
-          console.error('خطأ في العدّ التنازلي:', e);
-        }
+        countdowns.forEach(item=>{
+          const card = document.createElement("div");
+          card.className = "countdown-card" + (item.text.includes("تم الصرف") ? " done" : "");
+          const nameHtml = `<strong class="${item.highlight?'hl':''}">${item.name}</strong>`;
+          // تحويل الأسطر الجديدة إلى <br> للعرض العمودي
+          const content = `${nameHtml}<br>${item.text.replace(/\n/g,'<br>')}`;
+          card.innerHTML = content;
+          grid.appendChild(card);
+        });
       }
 
-      // تهيئة وتشغيل
       updateCountdowns();
       setInterval(updateCountdowns, 1000);
     });
