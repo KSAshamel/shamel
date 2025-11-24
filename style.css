@@ -113,3 +113,41 @@ button:hover {
     margin: 8px;
   }
 }
+.container {
+  background:#1e293b;
+  padding:15px;
+  border-radius:12px;
+  width:100%;          /* عرض كامل */
+  max-width:100%;      /* لا تحدد 800px */
+  margin:0;            /* بدون هوامش كبيرة */
+  box-shadow:0 0 15px rgba(34,197,94,0.4);
+  border:2px solid #22c55e;
+}
+.card {
+  background:#1e293b;
+  margin:8px;
+  padding:10px;
+  border-radius:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.4);
+  color:#22c55e;
+  font-size:14px;
+  text-align:center;
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+  gap:8px;
+  margin:8px;
+}
+@media (max-width:600px){
+  body {margin:0; padding:0;}
+  h2 {font-size:18px;}
+  label {font-size:13px;}
+  input, select {font-size:13px; padding:8px;}
+  button {font-size:14px; padding:10px;}
+  .result {font-size:14px;}
+  .warn {font-size:13px;}
+  .card {font-size:12px; padding:8px;}
+  .grid {grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:6px;}
+}
+
