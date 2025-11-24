@@ -544,7 +544,7 @@ button:hover {
 /* شبكة البطاقات */
 .grid {
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(60px, 1fr)); /* بطاقات صغيرة جدًا */
+  grid-template-columns:repeat(auto-fit, minmax(30px, 1fr)); /* بطاقات صغيرة جدًا */
   gap:2px;                /* فراغات شبه معدومة */
   margin:2px;
 }
@@ -560,48 +560,3 @@ button:hover {
   .card {font-size:8px; padding:3px; margin:1px;}
   .grid {grid-template-columns:repeat(auto-fit, minmax(55px, 1fr)); gap:2px; margin:1px;}
 }
-/* شبكة البطاقات */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); /* مربعات صغيرة */
-  gap: 4px;               /* فراغات صغيرة جدًا */
-  margin: 2px;
-}
-
-/* البطاقات */
-.card {
-  background: #1e293b;
-  margin: 2px;
-  padding: 4px;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(34,197,94,0.6); /* ظل بارز */
-  color: #22c55e;
-  font-size: 9px;          /* خط صغير */
-  text-align: center;
-  line-height: 1.2;
-  border: 1px solid #22c55e;
-
-  /* جعل البطاقة مربعة */
-  width: 70px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* للجوال */
-@media (max-width:600px){
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-    gap: 3px;
-    margin: 2px;
-  }
-  .card {
-    width: 60px;
-    height: 60px;
-    font-size: 8px;
-    padding: 3px;
-    margin: 2px;
-  }
-}
-
