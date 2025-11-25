@@ -85,9 +85,25 @@ header {
 }
 .converter-flex {
   display: flex;
-  flex-direction: row; /* بجوار بعض */
-  gap: 12px;
+  flex-direction: row;
+  gap: 10px;
   align-items: flex-start;
+}
+
+.converter-inputs {
+  flex: 2; /* محول التاريخ يبقى طبيعي */
+}
+
+.today-box {
+  flex: 1; /* خانة اليوم أصغر */
+  background: #1e293b;
+  border: 1px solid #22c55e;
+  border-radius: 8px;
+  padding: 6px; /* تصغير الحواف الداخلية */
+  text-align: center;
+  color: #FFD700;
+  font-size: 12px; /* خط أصغر */
+  box-shadow: 0 0 6px rgba(34,197,94,0.25);
 }
 
 .converter-inputs {
@@ -115,5 +131,16 @@ header {
   .converter-inputs, .today-box {
     flex: 1;
   }
+}
+.btn {
+  background: #22c55e;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 6px 12px;   /* حجم أصغر */
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;     /* خط عادي */
+  width: auto;         /* لا يأخذ العرض كامل */
 }
 
