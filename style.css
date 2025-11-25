@@ -17,11 +17,39 @@ header {
 }
 
 /* الحاسبات: أربع أزرار في صف واحد مع فصل أوضح وحجم أصغر */
+/* الحاسبات: نفس عرض البطاقات مع الحفاظ على نفس الارتفاع */
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;   /* مسافة فاصلة أوضح بين الأزرار */
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* نفس عرض البطاقات */
+  gap: 10px;   /* نفس الفاصل المستخدم في البطاقات */
   margin: 12px 0;
+}
+
+.icon {
+  background: var(--panel);
+  border: 1px solid rgba(111,174,63,0.5);
+  border-radius: 8px;
+  height: 82px;          /* أبقينا الارتفاع نفسه */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text);
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 11px;       /* حجم خط صغير متناسق مع البطاقات */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+
+.icon:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* للجوال */
+@media(max-width:600px){
+  .grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 10px; }
+  .icon { height: 82px; font-size: 10px; } /* نفس الارتفاع */
 }
 
 .icon {
@@ -157,4 +185,5 @@ header {
     max-width: 300px;
   }
 }
+
 
