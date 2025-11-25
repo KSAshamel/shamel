@@ -121,17 +121,38 @@ document.addEventListener('DOMContentLoaded', function(){
     { name:'يوم التأسيس السعودي', fixedMonth:1, fixedDay:22, highlight:true }
   ];
 
-  function nextTargetFrom(event, now){
-    if (event.fixedMonth !== undefined) {
-      let t = new Date(now.getFullYear(), event.fixedMonth, event.fixedDay);
-      if (t < now) t = new Date(now.getFullYear()+1, event.fixedMonth, event.fixedDay);
-      return t;
-    } else {
-      let t = new Date(now.getFullYear(), now.getMonth(), event.day);
-      if (t < now) t = new Date(now.getFullYear(), now.getMonth()+1, event.day);
+function nextTargetFrom(event, now){
+  if (event.fixedMonth !== undefined) {
+    let t = new Date(now.getFullYear(), event.fixedMonth, event.fixedDay, 0, 0, 0);
+
+    // إذا اليوم يساوي يوم الصرف
+    if (t.getDate() === now.getDate() &&
+        t.getMonth() === now.getMonth() &&
+        t.getFullYear() === now.getFullYear()) {
       return t;
     }
+
+    if (t < now) {
+      t = new Date(now.getFullYear()+1, event.fixedMonth, event.fixedDay, 0, 0, 0);
+    }
+    return t;
+
+  } else {
+    let t = new Date(now.getFullYear(), now.getMonth(), event.day, 0, 0, 0);
+
+    // إذا اليوم يساوي يوم الصرف
+    if (t.getDate() === now.getDate() &&
+        t.getMonth() === now.getMonth() &&
+        t.getFullYear() === now.getFullYear()) {
+      return t;
+    }
+
+    if (t < now) {
+      t = new Date(now.getFullYear(), now.getMonth()+1, event.day, 0, 0, 0);
+    }
+    return t;
   }
+}
 function updateCountdowns(){
   const now2 = new Date();
   const startOfToday = new Date(now2.getFullYear(), now2.getMonth(), now2.getDate(), 0, 0, 0);
@@ -234,6 +255,7 @@ function updateCountdowns(){
 </script>
 </body>
 </html>
+
 
 
 
