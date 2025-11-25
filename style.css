@@ -16,16 +16,37 @@ header {
   font-weight: bold;
 }
 
+/* الحاسبات: أربع أزرار في صف واحد مع فصل أوضح وحجم أصغر */
 .grid {
-  display: flex;
-  flex-direction: row;       /* صف أفقي على الكمبيوتر */
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;           /* يسمح بالالتفاف */
-  margin: 20px auto;
-  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;   /* مسافة فاصلة أوضح بين الأزرار */
+  margin: 12px 0;
 }
 
+.icon {
+  background: var(--bg);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  padding: 8px;          /* تصغير الحشوة الداخلية */
+  text-align: center;
+  color: var(--text);
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 12px;       /* تصغير حجم الخط */
+  width: 100%;
+}
+
+.icon:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* للجوال */
+@media(max-width:600px){
+  .grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .icon { padding: 6px; font-size: 11px; }
+}
 .icon {
   display: block;
   background: #1e293b;
@@ -136,3 +157,4 @@ header {
     max-width: 300px;
   }
 }
+
