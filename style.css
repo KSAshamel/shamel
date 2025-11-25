@@ -80,3 +80,22 @@
   </script>
 </body>
 </html>
+/* زر الرجوع الموحد */
+.icon {
+  background: var(--bg, #0f172a);
+  border: 2px solid var(--accent, #22c55e);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  color: var(--text, #f1f5f9);
+  font-weight: bold;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+  margin: 20px auto;
+  max-width: 220px;
+}
+.icon:hover {
+  background: var(--accent, #22c55e);
+  color: var(--bg, #0f172a);
+}
