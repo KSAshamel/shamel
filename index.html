@@ -166,12 +166,12 @@ function updateCountdowns(){
 
     // 👇 إذا اليوم يساوي يوم الصرف
     if (diffDays === 0) {
-      text = 'اليوم ✅';
+      text = 'اليوم ';
     } else if (diffDays > 0) {
       text = `متبقي ${diffDays} يوم`;
     } else {
       // لو حصل خطأ في الحساب نخليها اليوم
-      text = 'اليوم ✅';
+      text = 'اليوم ';
       diffDays = 0;
     }
 
@@ -255,6 +255,7 @@ function updateCountdowns(){
 </script>
 </body>
 </html>
+
 
 
 
