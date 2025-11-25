@@ -71,31 +71,36 @@
 <body>
   <header>الصفحة الرئيسية</header>
 
-  <!-- محول التاريخ -->
-  <div class="section-card">
-    <h2>محول التاريخ</h2>
+  <!-- محول التاريخ --><div class="section-card converter-box">
+  <div class="converter-flex">
+    <div class="converter-inputs">
+      <h2>محول التاريخ</h2>
+      <!-- الحقول كما هي -->
+      <label>أدخل التاريخ الميلادي:</label>
+      <div class="row" id="gInputs">
+        <input type="text" id="gDay" class="input" placeholder="اليوم">
+        <input type="text" id="gMonth" class="input" placeholder="الشهر">
+        <input type="text" id="gYear" class="input" placeholder="السنة">
+      </div>
 
-    <label>أدخل التاريخ الميلادي:</label>
-    <div class="row" id="gInputs">
-      <input type="text" id="gDay"   class="input" placeholder="اليوم"  inputmode="numeric" autocomplete="off" data-maxlen="2">
-      <input type="text" id="gMonth" class="input" placeholder="الشهر"  inputmode="numeric" autocomplete="off" data-maxlen="2">
-      <input type="text" id="gYear"  class="input" placeholder="السنة"  inputmode="numeric" autocomplete="off" data-maxlen="4">
+      <label>أدخل التاريخ الهجري:</label>
+      <div class="row" id="hInputs">
+        <input type="text" id="hDay" class="input" placeholder="اليوم">
+        <input type="text" id="hMonth" class="input" placeholder="الشهر">
+        <input type="text" id="hYear" class="input" placeholder="السنة">
+      </div>
+
+      <button class="btn" id="convertBtn">تحويل</button>
+      <div id="conversionResult" style="margin-top:6px;"></div>
     </div>
 
-    <label>أدخل التاريخ الهجري:</label>
-    <div class="row" id="hInputs">
-      <input type="text" id="hDay"   class="input" placeholder="اليوم"  inputmode="numeric" autocomplete="off" data-maxlen="2">
-      <input type="text" id="hMonth" class="input" placeholder="الشهر"  inputmode="numeric" autocomplete="off" data-maxlen="2">
-      <input type="text" id="hYear"  class="input" placeholder="السنة"  inputmode="numeric" autocomplete="off" data-maxlen="4">
+    <!-- خانة التاريخ الحالي -->
+    <div class="today-box">
+      <h2>اليوم</h2>
+      <div id="todayDate"></div>
     </div>
-
-    <button class="btn" id="convertBtn">تحويل</button>
-    <div id="todayDate" style="margin-top:6px; font-size:14px; color:var(--gold);">
- اليوم:
-</div>
-    <div id="conversionResult" style="margin-top:6px;"></div>
   </div>
-
+</div>
   <!-- العد التنازلي -->
   <div class="section-card">
     <h2>متبقي على :</h2>
@@ -322,6 +327,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 </script>
 </html>
+
 
 
 
