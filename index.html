@@ -150,14 +150,21 @@ document.addEventListener('DOMContentLoaded', function(){
 
   // عرض تاريخ اليوم (ميلادي + هجري). الهجري اختياري لو المكتبة محمّلة.
   (function showToday(){
-    const now = new Date();
-    const gDate = now.toLocaleDateString('ar-SA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
-    let hDate = 'غير متاح';
-    try {
-      const hasHijri = typeof moment !== 'undefined' && moment.fn && typeof moment.fn.iYear === 'function';
-      if (hasHijri) hDate = moment(now).format('iYYYY/iM/iD');
-    } catch(e) {}
-    todayBox.innerHTML = `الميلادي: ${gDate}<br>الهجري: ${hDate}`;
+   const now = new Date();
+  const gDate = new Intl.DateTimeFormat(
+    'ar-SA-u-ca-gregory',                   // عربي سعودي لكن مع تقويم ميلادي
+    { weekday:'long', year:'numeric', month:'long', day:'numeric' }
+  ).format(now);
+
+  let hDate = 'غير متاح';
+  try {
+    if (typeof moment !== 'undefined' && moment.fn && typeof moment.fn.iYear === 'function') {
+      hDate = moment(now).format('iYYYY/iM/iD'); // الهجري يبقى عبر moment-hijri
+    }
+  } catch(e) {}
+  todayBox.innerHTML = `الميلادي: ${gDate}<br>الهجري: ${hDate}`;
+
+
   })();
 
   // أحداث العدّ التنازلي: شهرية + ثابتة (اليوم الوطني، يوم التأسيس)
@@ -279,4 +286,5 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 </body>
 </html>
+
 
