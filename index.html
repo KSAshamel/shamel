@@ -144,25 +144,34 @@ footer { margin-top:auto; text-align:center; padding:8px; font-size:12px; color:
 <footer>ممدوح الرشيدي</footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', function(){
-  const todayBox = document.getElementById('todayDate');
-  const countdownGrid = document.getElementById('countdownGrid');
+ document.addEventListener('DOMContentLoaded', function(){
+    const todayBox = document.getElementById('todayDate');
+    const now = new Date();
 
-  // عرض تاريخ اليوم (ميلادي + هجري). الهجري اختياري لو المكتبة محمّلة.
-  (function showToday(){
-   const now = new Date();
-  const gDate = new Intl.DateTimeFormat(
-    'ar-SA-u-ca-gregory',                   // عربي سعودي لكن مع تقويم ميلادي
-    { weekday:'long', year:'numeric', month:'long', day:'numeric' }
-  ).format(now);
+    // استخراج اليوم بالعربية
+    const weekday = new Intl.DateTimeFormat(
+      'ar-SA-u-ca-gregory',
+      { weekday:'long' }
+    ).format(now);
 
-  let hDate = 'غير متاح';
-  try {
-    if (typeof moment !== 'undefined' && moment.fn && typeof moment.fn.iYear === 'function') {
-      hDate = moment(now).format('iYYYY/iM/iD'); // الهجري يبقى عبر moment-hijri
-    }
-  } catch(e) {}
-  todayBox.innerHTML = `الميلادي: ${gDate}<br>الهجري: ${hDate}`;
+    // التاريخ الميلادي (إجباراً بالتقويم الميلادي)
+    const gDate = new Intl.DateTimeFormat(
+      'ar-SA-u-ca-gregory',
+      { year:'numeric', month:'long', day:'numeric' }
+    ).format(now);
+
+    // التاريخ الهجري عبر moment-hijri
+    let hDate = 'غير متاح';
+    try {
+      if (typeof moment !== 'undefined' && moment.fn && typeof moment.fn.iYear === 'function') {
+        hDate = moment(now).format('iYYYY/iM/iD');
+      }
+    } catch(e) {}
+
+    // ترتيب العرض: اليوم أولاً ثم الميلادي ثم الهجري
+    todayBox.innerHTML = `${weekday}<br>الميلادي: ${gDate}<br>الهجري: ${hDate}`;
+
+
 
 
   })();
@@ -296,6 +305,7 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 </body>
 </html>
+
 
 
 
