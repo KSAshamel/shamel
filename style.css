@@ -16,7 +16,7 @@ header {
   font-weight: bold;
 }
 
-/* الحاسبات: نفس مقاس البطاقات */
+/* شبكة الحاسبات بنفس مقاس البطاقات */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* نفس عرض البطاقات */
@@ -24,46 +24,23 @@ header {
   margin: 12px 0;
 }
 
+/* زر الحاسبة بنفس شكل ومقاس البطاقة */
 .icon {
-  background: var(--panel);
-  border: 1px solid rgba(111,174,63,0.5);
-  border-radius: 8px;
-  height: 82px;          /* نفس ارتفاع البطاقات */
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  color: var(--text);
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 11px;       /* نفس حجم الخط تقريبًا */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
-
-.icon:hover {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-/* للجوال */
-@media(max-width:600px){
-  .grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 10px; }
-  .icon { height: 82px; font-size: 10px; }
-}
-.icon {
   background: var(--panel);
   border: 1px solid rgba(111,174,63,0.5);
   border-radius: 8px;
-  height: 82px;          /* نفس ارتفاع البطاقات */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  height: 82px;             /* نفس ارتفاع البطاقات */
+  padding: 0;               /* إزالة الحشوة الزائدة */
+  font-size: 11px;          /* نفس حجم النص تقريبًا */
   color: var(--text);
   font-weight: bold;
   text-decoration: none;
-  font-size: 11px;       /* نفس حجم الخط تقريبًا */
   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  box-sizing: border-box;   /* لمنع زيادة الحجم بسبب الحدود */
+  min-width: 0;             /* يمنع تمدد العنصر داخل الشبكة */
 }
 
 .icon:hover {
@@ -71,79 +48,16 @@ header {
   color: var(--bg);
 }
 
-/* للجوال */
+/* للجوال بنفس منطق البطاقات */
 @media(max-width:600px){
-  .grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 10px; }
-  .icon { height: 82px; font-size: 10px; }
-}
-.icon {
-  background: var(--panel);
-  border: 1px solid rgba(111,174,63,0.5);
-  border-radius: 8px;
-  height: 82px;          /* أبقينا الارتفاع نفسه */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: var(--text);
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 11px;       /* حجم خط صغير متناسق مع البطاقات */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
-
-.icon:hover {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-/* للجوال */
-@media(max-width:600px){
-  .grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 10px; }
-  .icon { height: 82px; font-size: 10px; } /* نفس الارتفاع */
-}
-
-.icon {
-  background: var(--bg);
-  border: 2px solid var(--accent);
-  border-radius: 8px;
-  padding: 8px;          /* تصغير الحشوة الداخلية */
-  text-align: center;
-  color: var(--text);
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 12px;       /* تصغير حجم الخط */
-  width: 100%;
-}
-
-.icon:hover {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-/* للجوال */
-@media(max-width:600px){
-  .grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .icon { padding: 6px; font-size: 11px; }
-}
-.icon {
-  display: block;
-  background: #1e293b;
-  border: 2px solid #22c55e;
-  border-radius: 12px;
-  text-align: center;
-  padding: 18px;
-  color: #22c55e;
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 0 20px rgba(34,197,94,0.25);
-  transition: transform 0.2s ease;
-}
-
-.icon:hover {
-  transform: scale(1.05);
-  background: #22c55e;
-  color: #0f172a;
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+  }
+  .icon {
+    height: 82px;
+    font-size: 10px;
+  }
 }
 
 /* زر الرجوع الثابت */
@@ -236,38 +150,3 @@ header {
     max-width: 300px;
   }
 }
-/* توحيد شبكة الحاسبات مع شبكة البطاقات */
-.grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)) !important;
-  gap: 10px !important;
-  margin: 12px 0 !important;
-}
-
-/* جعل زر الحاسبة نفس شكل ومقاس البطاقة تمامًا */
-.icon {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background: var(--panel) !important;
-  border: 1px solid rgba(111,174,63,0.5) !important;
-  border-radius: 8px !important;
-  height: 82px !important;            /* نفس ارتفاع البطاقة */
-  padding: 0 !important;               /* إزالة الحشوة التي تكبر المقاس */
-  font-size: 11px !important;          /* نفس حجم النص تقريبًا */
-  color: var(--text) !important;
-  text-decoration: none !important;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important;
-  box-sizing: border-box !important;   /* لمنع زيادة الحجم بسبب الحدود */
-  min-width: 0 !important;             /* يمنع تمدد العنصر داخل الشبكة */
-}
-
-/* للجوال بنفس منطق البطاقات */
-@media(max-width:600px){
-  .grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important; gap: 10px !important; }
-  .icon { height: 82px !important; font-size: 10px !important; }
-}
-
-
-
-
