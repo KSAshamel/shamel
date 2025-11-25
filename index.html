@@ -131,25 +131,28 @@ document.addEventListener('DOMContentLoaded', function(){
       if (t < now) t = new Date(now.getFullYear(), now.getMonth()+1, event.day);
       return t;
     }
-  }
-
+  
 function updateCountdowns(){
   const now2 = new Date();
+  const startOfToday = new Date(now2.getFullYear(), now2.getMonth(), now2.getDate(), 0, 0, 0);
+
   const items = events.map(ev=>{
     const target = nextTargetFrom(ev, now2);
-
-    // بداية اليوم الحالي والهدف عند منتصف الليل
-    const startOfToday = new Date(now2.getFullYear(), now2.getMonth(), now2.getDate(), 0, 0, 0);
     const startOfTarget = new Date(target.getFullYear(), target.getMonth(), target.getDate(), 0, 0, 0);
 
+    let text;
+    let diffDays = Math.floor((startOfTarget - startOfToday) / (1000 * 60 * 60 * 24));
+
     // 👇 إذا اليوم يساوي يوم الصرف
-    if (startOfToday.getTime() === startOfTarget.getTime()) {
-      return { name:ev.name, highlight:ev.highlight, diff:0, text:'اليوم ✅' };
+    if (diffDays === 0) {
+      text = 'اليوم ✅';
+    } else if (diffDays > 0) {
+      text = `متبقي ${diffDays} يوم`;
+    } else {
+      // لو حصل خطأ في الحساب نخليها اليوم
+      text = 'اليوم ✅';
+      diffDays = 0;
     }
-
-    const diffDays = Math.ceil((startOfTarget - startOfToday) / (1000 * 60 * 60 * 24));
-
-    let text = `متبقي ${diffDays} يوم`;
 
     return { name:ev.name, highlight:ev.highlight, diff:diffDays, text:text };
   }).sort((a,b)=> a.diff - b.diff);
@@ -231,6 +234,7 @@ function updateCountdowns(){
 </script>
 </body>
 </html>
+
 
 
 
