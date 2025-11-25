@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="manifest.json">
-<link rel="stylesheet" href="style.css">
 <title>شامل KSA</title>
 
 <!-- مكتبات التحويل -->
@@ -23,7 +21,7 @@ header { background:var(--panel); padding:12px; text-align:center; font-size:18p
 h2 { margin:0 0 8px 0; color:var(--gold); font-size:16px; }
 
 /* شبكة الحاسبات */
-.grid { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin:12px 0; }
+.grid { display:flex; flex-direction:row; justify-content:center; gap:12px; margin:12px 0; flex-wrap:nowrap; overflow-x:auto; }
 .icon { background:var(--bg); border:2px solid var(--accent); border-radius:8px; padding:10px; text-align:center; color:var(--text); font-weight:bold; cursor:pointer; display:block; text-decoration:none; min-width:120px; }
 .icon:hover { background:var(--accent); color:var(--bg); }
 
@@ -49,8 +47,8 @@ h2 { margin:0 0 8px 0; color:var(--gold); font-size:16px; }
 @media(max-width:600px){
   .converter-flex { flex-direction:row; }
   .converter-inputs, .today-box { flex:1; }
-  .grid { flex-direction:column; align-items:center; }
-  .icon { width:100%; max-width:300px; }
+  .grid { flex-direction:row; flex-wrap:nowrap; overflow-x:auto; }
+  .icon { min-width:120px; }
 }
 footer { margin-top:auto; text-align:center; padding:8px; font-size:12px; color:var(--gold); }
 </style>
@@ -98,7 +96,7 @@ footer { margin-top:auto; text-align:center; padding:8px; font-size:12px; color:
   <div class="grid">
     <a href="retirement.html" class="icon">حاسبة التقاعد</a>
     <a href="endservice.html" class="icon">حاسبة نهاية الخدمة</a>
-    <a href="social.html" class="icon"> حاسبة الضمان المطور</a>
+    <a href="social.html" class="icon">حاسبة الضمان</a>
     <a href="citizen.html" class="icon">حاسبة حساب المواطن</a>
   </div>
 </div>
@@ -114,7 +112,40 @@ document.addEventListener('DOMContentLoaded', function(){
   document.getElementById('todayDate').innerHTML = `الميلادي: ${gDate}<br>الهجري: ${hDate}`;
 });
 
-// نفس كود التحويل والعد التنازلي كما في نسختك الأصلية
-</script>
-</body>
-</html>
+// محول التاريخ
+function onlyDigits(s){ return String(s).replace(/\D+/g,''); }
+function pad2(n){ return String(n).padStart(2,'0'); }
+function isIntInRange(val, min, max){
+  const s = String(val).trim();
+  if(s === '' || !/^\d+$/.test(s)) return false;
+  const n = Number(s);
+  return Number.isInteger(n) && n >= min && n <= max;
+}
+function show(msg){ document.getElementById('conversionResult').textContent = msg; }
+
+function attachAutoAdvance(containerId){
+  const inputs = Array.from(document.getElementById(containerId).querySelectorAll('input'));
+  inputs.forEach((inp, idx)=>{
+    inp.addEventListener('input', ()=>{
+      inp.value = onlyDigits(inp.value);
+      const maxlen = Number(inp.dataset.maxlen || 2);
+      if(inp.value.length >= maxlen && idx + 1 < inputs.length){
+        inputs[idx+1].focus();
+        inputs[idx+1].select && inputs[idx+1].select();
+      }
+    });
+  });
+}
+attachAutoAdvance('gInputs');
+attachAutoAdvance('hInputs');
+
+function convertDate(){
+  try{
+    const gD = document.getElementById("gDay").value;
+    const gM = document.getElementById("gMonth").value;
+    const gY = document.getElementById("gYear").value;
+    const hD = document.getElementById("hDay").value;
+    const hM = document.getElementById("hMonth").value;
+    const hY = document.getElementById("hYear").value;
+
+    if(isIntInRange(gD,1,31
