@@ -236,6 +236,37 @@ header {
     max-width: 300px;
   }
 }
+/* توحيد شبكة الحاسبات مع شبكة البطاقات */
+.grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)) !important;
+  gap: 10px !important;
+  margin: 12px 0 !important;
+}
+
+/* جعل زر الحاسبة نفس شكل ومقاس البطاقة تمامًا */
+.icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--panel) !important;
+  border: 1px solid rgba(111,174,63,0.5) !important;
+  border-radius: 8px !important;
+  height: 82px !important;            /* نفس ارتفاع البطاقة */
+  padding: 0 !important;               /* إزالة الحشوة التي تكبر المقاس */
+  font-size: 11px !important;          /* نفس حجم النص تقريبًا */
+  color: var(--text) !important;
+  text-decoration: none !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important;
+  box-sizing: border-box !important;   /* لمنع زيادة الحجم بسبب الحدود */
+  min-width: 0 !important;             /* يمنع تمدد العنصر داخل الشبكة */
+}
+
+/* للجوال بنفس منطق البطاقات */
+@media(max-width:600px){
+  .grid { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)) !important; gap: 10px !important; }
+  .icon { height: 82px !important; font-size: 10px !important; }
+}
 
 
 
