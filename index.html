@@ -138,18 +138,18 @@ function updateCountdowns(){
   const items = events.map(ev=>{
     const target = nextTargetFrom(ev, now2);
 
-    // فرق الأيام (نحسب من منتصف الليل)
+    // بداية اليوم الحالي والهدف عند منتصف الليل
     const startOfToday = new Date(now2.getFullYear(), now2.getMonth(), now2.getDate(), 0, 0, 0);
     const startOfTarget = new Date(target.getFullYear(), target.getMonth(), target.getDate(), 0, 0, 0);
 
+    // 👇 إذا اليوم يساوي يوم الصرف
+    if (startOfToday.getTime() === startOfTarget.getTime()) {
+      return { name:ev.name, highlight:ev.highlight, diff:0, text:'اليوم ✅' };
+    }
+
     const diffDays = Math.ceil((startOfTarget - startOfToday) / (1000 * 60 * 60 * 24));
 
-    let text;
-    if (diffDays <= 0) {
-      text = 'اليوم ✅';
-    } else {
-      text = `متبقي ${diffDays} يوم`;
-    }
+    let text = `متبقي ${diffDays} يوم`;
 
     return { name:ev.name, highlight:ev.highlight, diff:diffDays, text:text };
   }).sort((a,b)=> a.diff - b.diff);
@@ -231,6 +231,7 @@ function updateCountdowns(){
 </script>
 </body>
 </html>
+
 
 
 
