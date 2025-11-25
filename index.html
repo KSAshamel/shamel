@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>شامل KSA</title>
 
-<!-- مكتبات التحويل -->
+<!-- مكتبات التحويل: يجب تحميل moment قبل moment-hijri -->
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment-hijri@3.0.0/moment-hijri.min.js"></script>
 
@@ -20,7 +20,7 @@ header { background:var(--panel); padding:12px; text-align:center; font-size:18p
 
 h2 { margin:0 0 8px 0; color:var(--gold); font-size:16px; }
 
-/* شبكة الحاسبات */
+/* شبكة الحاسبات (صف أفقي حتى على الجوال) */
 .grid { display:flex; flex-direction:row; justify-content:center; gap:12px; margin:12px 0; flex-wrap:nowrap; overflow-x:auto; }
 .icon { background:var(--bg); border:2px solid var(--accent); border-radius:8px; padding:10px; text-align:center; color:var(--text); font-weight:bold; cursor:pointer; display:block; text-decoration:none; min-width:120px; }
 .icon:hover { background:var(--accent); color:var(--bg); }
@@ -64,18 +64,18 @@ footer { margin-top:auto; text-align:center; padding:8px; font-size:12px; color:
     <div class="converter-inputs">
       <label>أدخل التاريخ الميلادي:</label>
       <div class="row" id="gInputs">
-        <input type="text" id="gDay" class="input" placeholder="اليوم" data-maxlen="2">
-        <input type="text" id="gMonth" class="input" placeholder="الشهر" data-maxlen="2">
-        <input type="text" id="gYear" class="input" placeholder="السنة" data-maxlen="4">
+        <input type="text" id="gDay" class="input" placeholder="اليوم" inputmode="numeric" autocomplete="off" data-maxlen="2">
+        <input type="text" id="gMonth" class="input" placeholder="الشهر" inputmode="numeric" autocomplete="off" data-maxlen="2">
+        <input type="text" id="gYear" class="input" placeholder="السنة" inputmode="numeric" autocomplete="off" data-maxlen="4">
       </div>
       <label>أدخل التاريخ الهجري:</label>
       <div class="row" id="hInputs">
-        <input type="text" id="hDay" class="input" placeholder="اليوم" data-maxlen="2">
-        <input type="text" id="hMonth" class="input" placeholder="الشهر" data-maxlen="2">
-        <input type="text" id="hYear" class="input" placeholder="السنة" data-maxlen="4">
+        <input type="text" id="hDay" class="input" placeholder="اليوم" inputmode="numeric" autocomplete="off" data-maxlen="2">
+        <input type="text" id="hMonth" class="input" placeholder="الشهر" inputmode="numeric" autocomplete="off" data-maxlen="2">
+        <input type="text" id="hYear" class="input" placeholder="السنة" inputmode="numeric" autocomplete="off" data-maxlen="4">
       </div>
       <button class="btn" id="convertBtn">تحويل</button>
-      <div id="conversionResult"></div>
+      <div id="conversionResult" style="margin-top:6px;"></div>
     </div>
     <div class="today-box">
       <h3>تاريخ اليوم</h3>
@@ -104,46 +104,153 @@ footer { margin-top:auto; text-align:center; padding:8px; font-size:12px; color:
 <footer>ممدوح الرشيدي</footer>
 
 <script>
-// عرض تاريخ اليوم
 document.addEventListener('DOMContentLoaded', function(){
+  // تحقق من توفر moment و moment-hijri دون تعطيل الصفحة
+  const hasMoment = typeof moment !== 'undefined';
+  const hasHijri = hasMoment && moment.fn && typeof moment.fn.iYear === 'function';
+
+  // عرض تاريخ اليوم (ميلادي دائماً، هجري إذا متوفر)
   const now = new Date();
-  const gDate = now.toLocaleDateString('ar-SA',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  const hDate = moment(now).format("iYYYY/iM/iD");
-  document.getElementById('todayDate').innerHTML = `الميلادي: ${gDate}<br>الهجري: ${hDate}`;
-});
+  const gDate = now.toLocaleDateString('ar-SA', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  const hDate = hasHijri ? moment(now).format("iYYYY/iM/iD") : "غير متاح (تحقق من الاتصال)";
+  const todayEl = document.getElementById('todayDate');
+  if (todayEl) {
+    todayEl.innerHTML = `الميلادي: ${gDate}<br>الهجري: ${hDate}`;
+  }
 
-// محول التاريخ
-function onlyDigits(s){ return String(s).replace(/\D+/g,''); }
-function pad2(n){ return String(n).padStart(2,'0'); }
-function isIntInRange(val, min, max){
-  const s = String(val).trim();
-  if(s === '' || !/^\d+$/.test(s)) return false;
-  const n = Number(s);
-  return Number.isInteger(n) && n >= min && n <= max;
-}
-function show(msg){ document.getElementById('conversionResult').textContent = msg; }
+  // أدوات الإدخال
+  function onlyDigits(s){ return String(s).replace(/\D+/g,''); }
+  function pad2(n){ return String(n).padStart(2,'0'); }
+  function isIntInRange(val, min, max){
+    const s = String(val).trim();
+    if(s === '' || !/^\d+$/.test(s)) return false;
+    const n = Number(s);
+    return Number.isInteger(n) && n >= min && n <= max;
+  }
+  function show(msg){ const r = document.getElementById('conversionResult'); if(r) r.textContent = msg; }
 
-function attachAutoAdvance(containerId){
-  const inputs = Array.from(document.getElementById(containerId).querySelectorAll('input'));
-  inputs.forEach((inp, idx)=>{
-    inp.addEventListener('input', ()=>{
-      inp.value = onlyDigits(inp.value);
-      const maxlen = Number(inp.dataset.maxlen || 2);
-      if(inp.value.length >= maxlen && idx + 1 < inputs.length){
-        inputs[idx+1].focus();
-        inputs[idx+1].select && inputs[idx+1].select();
-      }
+  // انتقال تلقائي بين خانات الإدخال
+  function attachAutoAdvance(containerId){
+    const el = document.getElementById(containerId);
+    if(!el) return;
+    const inputs = Array.from(el.querySelectorAll('input'));
+    inputs.forEach((inp, idx)=>{
+      inp.addEventListener('input', ()=>{
+        inp.value = onlyDigits(inp.value);
+        const maxlen = Number(inp.dataset.maxlen || 2);
+        if(inp.value.length >= maxlen && idx + 1 < inputs.length){
+          inputs[idx+1].focus();
+          inputs[idx+1].select && inputs[idx+1].select();
+        }
+      });
     });
-  });
-}
-attachAutoAdvance('gInputs');
-attachAutoAdvance('hInputs');
+  }
+  attachAutoAdvance('gInputs');
+  attachAutoAdvance('hInputs');
 
-function convertDate(){
-  try{
-    const gD = document.getElementById("gDay").value;
-    const gM = document.getElementById("gMonth").value;
-    const gY = document.getElementById("gYear").value;
-    const hD = document.getElementById("hDay").value;
-    const hM = document.getElementById("hMonth").value;
-    const hY = document.getElementById("
+  // محول التاريخ
+  function convertDate(){
+    try{
+      if(!hasHijri){
+        show('مكتبة التحويل الهجري غير متاحة. تأكد من اتصال الإنترنت.');
+        return;
+      }
+
+      const gD = document.getElementById("gDay").value;
+      const gM = document.getElementById("gMonth").value;
+      const gY = document.getElementById("gYear").value;
+      const hD = document.getElementById("hDay").value;
+      const hM = document.getElementById("hMonth").value;
+      const hY = document.getElementById("hYear").value;
+
+      // ميلادي -> هجري
+      if(isIntInRange(gD,1,31) && isIntInRange(gM,1,12) && isIntInRange(gY,1,9999)){
+        const gStr = `${gY}-${pad2(gM)}-${pad2(gD)}`;
+        const mg = moment(gStr, "YYYY-MM-DD", true);
+        if(!mg.isValid()){ show("تاريخ ميلادي غير صالح."); return; }
+        show(`التاريخ الهجري: ${mg.format("iYYYY/iM/iD")}`);
+        return;
+      }
+
+      // هجري -> ميلادي
+      if(isIntInRange(hD,1,30) && isIntInRange(hM,1,12) && isIntInRange(hY,1,9999)){
+        const mh = moment(`${Number(hY)}/${Number(hM)}/${Number(hD)}`, "iYYYY/iM/iD", true);
+        if(!mh.isValid()){ show("تاريخ هجري غير صالح."); return; }
+        show(`التاريخ الميلادي: ${mh.format("YYYY/MM/DD")}`);
+        return;
+      }
+
+      show("أدخل اليوم ثم الشهر ثم السنة كاملة في إحدى الخانات.");
+    }catch(e){
+      show("حدث خطأ في التحويل. تأكد من الأرقام المدخلة.");
+    }
+  }
+  const btn = document.getElementById('convertBtn');
+  if(btn) btn.addEventListener('click', convertDate);
+
+  // العدّ التنازلي
+  const events = [
+    { name: "الراتب", day: 27 },
+    { name: "التقاعد", day: 1 },
+    { name: "الضمان المطور", day: 1 },
+    { name: "ساند", day: 1 },
+    { name: "حافز", day: 5 },
+    { name: "دعم ريف", day: 10, highlight: true },
+    { name: "الدعم الزراعي", day: 1 },
+    { name: "حساب المواطن", day: 10 },
+    { name: "الدعم العقاري", day: 24 },
+    { name: "التأهيل الشامل", day: 26 },
+    { name: "اليوم الوطني السعودي", month: 8, day: 23, highlight: true }, // سبتمبر
+    { name: "يوم التأسيس السعودي", month: 1, day: 22, highlight: true }   // فبراير
+  ];
+
+  function adjustWeekend(date){
+    const d = date.getDay(); // 0 أحد .. 5 جمعة .. 6 سبت
+    if(d === 5) date.setDate(date.getDate() - 1); // جمعة -> خميس
+    else if(d === 6) date.setDate(date.getDate() + 1); // سبت -> أحد
+    return date;
+  }
+
+  function nextTargetFrom(event, now){
+    if (event.month !== undefined) {
+      let t = new Date(now.getFullYear(), event.month, event.day);
+      if (t < now) t = new Date(now.getFullYear() + 1, event.month, event.day);
+      return adjustWeekend(t);
+    }
+    let t = new Date(now.getFullYear(), now.getMonth(), event.day);
+    if (t < now) t = new Date(now.getFullYear(), now.getMonth() + 1, event.day);
+    return adjustWeekend(t);
+  }
+
+  function updateCountdowns(){
+    const grid = document.getElementById("countdownGrid");
+    if(!grid) return;
+    const now2 = new Date();
+    grid.innerHTML = "";
+
+    const countdowns = events.map(event=>{
+      const target = nextTargetFrom(event, now2);
+      const diff = target - now2;
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff / (1000*60*60)) % 24);
+      const text = diff <= 0 ? "تم الصرف ✅" : `متبقي ${days}ي ${hours}س`;
+      return { name:event.name, highlight:event.highlight, time:diff, text };
+    });
+
+    countdowns.sort((a,b)=>a.time - b.time);
+
+    countdowns.forEach(item=>{
+      const card = document.createElement("div");
+      card.className = "countdown-card" + (item.text.includes("تم الصرف") ? " done" : "");
+      const nameHtml = `<strong class="${item.highlight ? 'hl' : ''}">${item.name}</strong>`;
+      card.innerHTML = `${nameHtml}<br>${item.text}`;
+      grid.appendChild(card);
+    });
+  }
+
+  updateCountdowns();
+  setInterval(updateCountdowns, 1000);
+});
+</script>
+</body>
+</html>
