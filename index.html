@@ -356,6 +356,29 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+  <!-- كود عرض التاريخ الميلادي والهجري -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const now = new Date();
+
+  // التاريخ الميلادي (مع اليوم والشهر والسنة)
+  const gDate = now.toLocaleDateString('ar-SA', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  // التاريخ الهجري باستخدام moment-hijri (يعتمد على تقويم أم القرى)
+  const hDate = moment(now).format("iYYYY/iM/iD");
+
+  // عرض النتيجة في خانة اليوم
+  document.getElementById('todayDate').innerHTML =
+    `الميلادي: ${gDate}<br>الهجري: ${hDate}`;
+});
+</script>
+</body>
+</html>
 </body>
   <script>
   if ('serviceWorker' in navigator) {
@@ -365,6 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 </script>
 </html>
+
 
 
 
