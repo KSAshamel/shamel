@@ -16,50 +16,6 @@ header {
   font-weight: bold;
 }
 
-/* شبكة الحاسبات بنفس مقاس البطاقات */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* نفس عرض البطاقات */
-  gap: 10px;   /* نفس الفاصل المستخدم في البطاقات */
-  margin: 12px 0;
-}
-
-/* زر الحاسبة بنفس شكل ومقاس البطاقة */
-.icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--panel);
-  border: 1px solid rgba(111,174,63,0.5);
-  border-radius: 8px;
-  height: 82px;             /* نفس ارتفاع البطاقات */
-  padding: 0;               /* إزالة الحشوة الزائدة */
-  font-size: 11px;          /* نفس حجم النص تقريبًا */
-  color: var(--text);
-  font-weight: bold;
-  text-decoration: none;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-  box-sizing: border-box;   /* لمنع زيادة الحجم بسبب الحدود */
-  min-width: 0;             /* يمنع تمدد العنصر داخل الشبكة */
-}
-
-.icon:hover {
-  background: var(--accent);
-  color: var(--bg);
-}
-
-/* للجوال بنفس منطق البطاقات */
-@media(max-width:600px){
-  .grid {
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-    gap: 10px;
-  }
-  .icon {
-    height: 82px;
-    font-size: 10px;
-  }
-}
-
 /* زر الرجوع الثابت */
 .back-btn {
   position: fixed;
@@ -118,7 +74,7 @@ header {
   box-shadow: 0 0 6px rgba(34,197,94,0.25);
 }
 
-/* زر التحويل بحجم عادي */
+/* زر التحويل */
 .btn {
   background: #22c55e;
   color: #000;
@@ -134,19 +90,51 @@ header {
 /* للجوال */
 @media (max-width: 640px) {
   .converter-flex {
-    flex-direction: row; /* بجوار بعض */
+    flex-direction: row;
   }
   .converter-inputs, .today-box {
     flex: 1;
   }
+}
+
+/* --- تعديل الحاسبات فقط --- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* نفس عرض البطاقات */
+  gap: 10px;   /* نفس الفاصل المستخدم في البطاقات */
+  margin: 12px 0;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  border: 1px solid rgba(111,174,63,0.5);
+  border-radius: 8px;
+  height: 82px;             /* نفس ارتفاع البطاقات */
+  padding: 0;               /* إزالة الحشوة الزائدة */
+  font-size: 11px;          /* نفس حجم النص تقريبًا */
+  color: var(--text);
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.icon:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+@media(max-width:600px){
   .grid {
-    flex-direction: column; /* عمود واحد للحاسبات */
-    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
   }
   .icon {
-    font-size: 16px;
-    padding: 14px;
-    width: 100%; /* كل بطاقة تأخذ عرض الشاشة */
-    max-width: 300px;
+    height: 82px;
+    font-size: 10px;
   }
 }
