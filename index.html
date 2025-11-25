@@ -225,32 +225,46 @@
         return adjustWeekend(t);
       }
 
-      function updateCountdowns(){
-        const now = new Date();
-        const grid = document.getElementById("countdownGrid");
-        if(!grid) return;
-        grid.innerHTML = "";
+     function updateCountdowns(){
+  const now = new Date();
+  const grid = document.getElementById("countdownGrid");
+  if(!grid) return;
 
-        const countdowns = events.map(event=>{
-          const target = nextTargetFrom(event, now);
-          const diff = target - now;
-          const days = Math.floor(diff / (1000*60*60*24));
-          const hours = Math.floor((diff / (1000*60*60)) % 24);
-          const text = diff <= 0 ? "تم الصرف ✅" : `متبقي ${days}ي\n${hours}س`;
-          return { name:event.name, highlight:event.highlight, time:diff, text };
-        });
+  grid.innerHTML = "";
 
-        countdowns.sort((a,b)=>a.time - b.time);
+  const countdowns = events.map(event=>{
+    const target = nextTargetFrom(event, now);
+    const diff = target - now;
 
-        countdowns.forEach(item=>{
-          const card = document.createElement("div");
-          card.className = "countdown-card" + (item.text.includes("تم الصرف") ? " done" : "");
-          const nameHtml = `<strong class="${item.highlight ? 'hl' : ''}">${item.name}</strong>`;
-          const content = `${nameHtml}<br>${item.text.replace(/\n/g,'<br>')}`;
-          card.innerHTML = content;
-          grid.appendChild(card);
-        });
-      }
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor(diff / (1000*60*60));
+
+    let text;
+    if (diff <= 0) {
+      // يوم الصرف نفسه
+      text = "اليوم ✅";
+    } else if (days > 0) {
+      // إذا باقي أكثر من يوم
+      text = `متبقي ${days} يوم`;
+    } else {
+      // إذا أقل من يوم (يعني بالساعات فقط)
+      text = `متبقي ${hours} ساعة`;
+    }
+
+    return { name:event.name, highlight:event.highlight, time:diff, text };
+  });
+
+  countdowns.sort((a,b)=>a.time - b.time);
+
+  countdowns.forEach(item=>{
+    const card = document.createElement("div");
+    card.className = "countdown-card" + (item.text.includes("اليوم") ? " done" : "");
+    const nameHtml = `<strong class="${item.highlight ? 'hl' : ''}">${item.name}</strong>`;
+    const content = `${nameHtml}<br>${item.text}`;
+    card.innerHTML = content;
+    grid.appendChild(card);
+  });
+}
 
       updateCountdowns();
       setInterval(updateCountdowns, 1000);
@@ -308,6 +322,7 @@ document.addEventListener('DOMContentLoaded', function(){
   }
 </script>
 </html>
+
 
 
 
