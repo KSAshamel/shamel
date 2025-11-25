@@ -18,9 +18,48 @@ header { background:var(--panel); padding:12px; text-align:center; font-size:18p
 h2 { margin:0 0 8px 0; color:var(--gold); font-size:16px; }
 
 /* الحاسبات: أربع أزرار في صف واحد مع فصل واضح ومناسب للجوال */
-.grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; margin:12px 0; }
-.icon { background:var(--bg); border:2px solid var(--accent); border-radius:10px; padding:12px; text-align:center; color:var(--text); font-weight:bold; text-decoration:none; font-size:13px; width:100%; }
-.icon:hover { background:var(--accent); color:var(--bg); }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* نفس عرض البطاقات */
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  border: 1px solid rgba(111,174,63,0.5);
+  border-radius: 8px;
+  height: 82px;             /* نفس ارتفاع البطاقات */
+  padding: 0;               /* إزالة الحشوة الزائدة */
+  font-size: 11px;          /* متناسق مع البطاقات */
+  color: var(--text);
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.icon:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+@media(max-width:600px){
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+  }
+  .icon {
+    height: 82px;
+    font-size: 10px;
+  }
+}
+
+
 
 /* العدّ التنازلي */
 .countdown-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(88px,1fr)); gap:10px; margin:12px 0; }
@@ -240,3 +279,4 @@ document.addEventListener('DOMContentLoaded', function(){
 </script>
 </body>
 </html>
+
