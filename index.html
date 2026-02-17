@@ -136,22 +136,40 @@ document.addEventListener('DOMContentLoaded', function(){
   ];
 
 function nextTargetFrom(event, now){
-  if (event.fixedMonth !== undefined) {
-    let t = new Date(now.getFullYear(), event.fixedMonth, event.fixedDay, 0, 0, 0);
 
-    // إذا اليوم يساوي يوم الصرف
-    if (t.getDate() === now.getDate() &&
-        t.getMonth() === now.getMonth() &&
-        t.getFullYear() === now.getFullYear()) {
-      return t;
+  // تعديل يوم الصرف إذا وافق جمعة أو سبت
+  function adjustWeekend(date){
+    const day = date.getDay(); // 5 = الجمعة ، 6 = السبت
+    if(day === 5){ 
+      date.setDate(date.getDate() - 1); // الجمعة → الخميس
+    } else if(day === 6){
+      date.setDate(date.getDate() + 1); // السبت → الأحد
     }
+    return date;
+  }
+
+  let t;
+
+  // أحداث بتاريخ ثابت (اليوم الوطني – يوم التأسيس)
+  if (event.fixedMonth !== undefined) {
+    t = new Date(now.getFullYear(), event.fixedMonth, event.fixedDay, 0, 0, 0);
 
     if (t < now) {
-      t = new Date(now.getFullYear()+1, event.fixedMonth, event.fixedDay, 0, 0, 0);
+      t = new Date(now.getFullYear() + 1, event.fixedMonth, event.fixedDay, 0, 0, 0);
     }
-    return t;
 
-  } else {
+    return adjustWeekend(t);
+  }
+
+  // أحداث شهرية (الراتب – الضمان – حساب المواطن – إلخ)
+  t = new Date(now.getFullYear(), now.getMonth(), event.day, 0, 0, 0);
+
+  if (t < now) {
+    t = new Date(now.getFullYear(), now.getMonth() + 1, event.day, 0, 0, 0);
+  }
+
+  return adjustWeekend(t);
+} else {
     let t = new Date(now.getFullYear(), now.getMonth(), event.day, 0, 0, 0);
 
     // إذا اليوم يساوي يوم الصرف
@@ -269,6 +287,7 @@ function updateCountdowns(){
 </script>
 </body>
 </html>
+
 
 
 
